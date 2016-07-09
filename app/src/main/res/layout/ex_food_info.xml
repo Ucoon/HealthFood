@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#fff">
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zhurou"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:layout_margin="20dp"
+        android:drawablePadding="20dp"
+        android:drawableLeft="@drawable/ex_food_icon"/>
+    <TextView
+        android:id="@+id/tv5"
+        android:text="@string/text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:background="#fff"
+        android:textColor="#000"
+        android:maxLines="21"
+        android:width="10px"
+        android:layout_margin="20px"/>
+</LinearLayout>
