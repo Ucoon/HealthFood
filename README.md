@@ -1,2 +1,2 @@
 # HealthFood
-HeaithFood
+HealthFood
