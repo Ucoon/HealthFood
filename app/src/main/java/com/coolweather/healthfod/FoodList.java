@@ -1,11 +1,13 @@
 package com.coolweather.healthfod;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -14,14 +16,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 /**
  * Created by ZongJie on 2016/7/9.
  */
-public class FoodList extends ListActivity implements AdapterView.OnItemClickListener {
+public class FoodList extends Activity implements AdapterView.OnItemClickListener {
+    @Bind(R.id.list_view)
     ListView listView;
+    List<Food> list=new ArrayList<Food>();
     private static final String[] food = { "猪肉", "猪肝", "猪血", "羊肉", "牛肉", "牛肝", "鹅肉", "兔肉", "狗肉",
             "鸭肉", "鸡肉", "驴肉", "鸡蛋", "鲤鱼", "黄鱼", "虾", "虾皮", "螃蟹", "蛤", "鳖肉",
             "田螺", "大蒜", "葱", "萝卜", "芹菜", "韭菜", "菠菜", "莴笋", "竹笋", "西红柿", "洋葱",
@@ -148,18 +153,9 @@ public class FoodList extends ListActivity implements AdapterView.OnItemClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
-        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
-        for (int i=0;i<resId.length;i++){
-            Map<String,Object> map=new HashMap<String,Object>();
-            map.put("iv1",resId[i]);
-            map.put("tv1",food[i]);
-            map.put("tv2",food1[i]);
-            list.add(map);
-        }
-        SimpleAdapter simpleAdapter=new SimpleAdapter(this,list,R.layout.activity_list_row,
-                new String[]{"iv1","tv1","tv2"},new int[]{R.id.iv1,R.id.tv1,R.id.tv2});
-        setListAdapter(simpleAdapter);
-        listView=this.getListView();
+        initFoods();
+        FoodAdapter foodAdapter=new FoodAdapter(this,R.layout.activity_list_row,list);
+        listView.setAdapter(foodAdapter);
         listView.setOnItemClickListener(this);
     }
 
@@ -175,5 +171,21 @@ public class FoodList extends ListActivity implements AdapterView.OnItemClickLis
         intent.putExtra("efoodinfo",efoodinfo[position]);
         startActivity(intent);
     }
+    private void initFoods(){
 
+        for (int i=0;i<resId.length;i++){
+            Food resource=new Food(resId[i],food[i],food1[i]);
+            /*Map<String,Object> map=new HashMap<String,Object>();
+            map.put("iv1",resId[i]);
+            map.put("tv1",food[i]);
+            map.put("tv2",food1[i]);*/
+            list.add(resource);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }
